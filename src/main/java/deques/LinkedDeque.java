@@ -32,16 +32,20 @@ public class LinkedDeque<E> implements Deque<E> {
 
     @Override
     public void addFirst(E element) {
-        size += 1;
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> newNode = new Node<>(element, front, front.next);
+        front.next.prev = newNode;
+        front.next = newNode;
+        size++;
+        // TODO: Replace with your code
     }
 
     @Override
     public void addLast(E element) {
-        size += 1;
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> newNode = new Node<>(element, back.prev, back);
+        back.prev.next = newNode;
+        back.prev = newNode;
+        size++;
+        // TODO: Replace with your code
     }
 
     @Override
@@ -49,9 +53,12 @@ public class LinkedDeque<E> implements Deque<E> {
         if (size == 0) {
             return null;
         }
-        size -= 1;
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> firstNode = front.next;
+        front.next = firstNode.next;
+        firstNode.next.prev = front;
+        size--;
+        return firstNode.value;
+        // TODO: Replace with your code
     }
 
     @Override
@@ -59,9 +66,13 @@ public class LinkedDeque<E> implements Deque<E> {
         if (size == 0) {
             return null;
         }
-        size -= 1;
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> lastNode = back.prev;
+        back.prev = lastNode.prev;
+        lastNode.prev.next = back;
+        size--;
+        return lastNode.value;
+        // TODO: Replace with your code
+
     }
 
     @Override
@@ -72,7 +83,7 @@ public class LinkedDeque<E> implements Deque<E> {
         Node<E> curr = front.next;
         while (index > 0) {
             curr = curr.next;
-            index -= 1;
+            index--;
         }
         return curr.value;
     }
@@ -123,7 +134,7 @@ public class LinkedDeque<E> implements Deque<E> {
             if (message != null) {
                 return message;
             }
-            i += 1;
+            i++;
         }
         return null;
     }

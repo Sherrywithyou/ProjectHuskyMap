@@ -17,6 +17,7 @@ public interface Deque<E> {
      */
     void addFirst(E element);
 
+
     /**
      * Adds the given element to the back of this deque.
      *
