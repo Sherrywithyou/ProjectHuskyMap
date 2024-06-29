@@ -159,9 +159,11 @@ public class ArrayDeque<E> implements Deque<E> {
     @SuppressWarnings("unchecked")
     private void resize(int capacity) {
         E[] newData = (E[]) new Object[capacity];
+        //change size to data.length
         int i = increment(front, data.length);
         for (int newIndex = 0; newIndex < size; newIndex += 1) {
             newData[newIndex] = data[i];
+            //change size to data.length
             i = increment(i, data.length);
         }
         front = newData.length - 1;

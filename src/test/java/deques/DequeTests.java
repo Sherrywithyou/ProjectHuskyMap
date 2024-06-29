@@ -182,6 +182,7 @@ public abstract class DequeTests {
     }
 
     @Test
+    // give some logic why my codes work
     void confusingTest() {
         Deque<Integer> deque = createDeque();
         deque.addFirst(0);
@@ -299,7 +300,7 @@ public abstract class DequeTests {
         assertEquals(5, deque.removeFirst());
     }
 
-    @Disabled
+    // @Disabled
     @Nested
     class RuntimeExperiments {
         /**

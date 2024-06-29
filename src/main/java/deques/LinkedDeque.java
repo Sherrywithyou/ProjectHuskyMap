@@ -32,20 +32,20 @@ public class LinkedDeque<E> implements Deque<E> {
 
     @Override
     public void addFirst(E element) {
+        // add code to implement adding element at the front
         Node<E> newNode = new Node<>(element, front, front.next);
         front.next.prev = newNode;
         front.next = newNode;
         size++;
-        // TODO: Replace with your code
     }
 
     @Override
     public void addLast(E element) {
+        // add code to implement adding element at the end
         Node<E> newNode = new Node<>(element, back.prev, back);
         back.prev.next = newNode;
         back.prev = newNode;
         size++;
-        // TODO: Replace with your code
     }
 
     @Override
@@ -53,12 +53,12 @@ public class LinkedDeque<E> implements Deque<E> {
         if (size == 0) {
             return null;
         }
+        // add code to implement removing the first element
         Node<E> firstNode = front.next;
         front.next = firstNode.next;
         firstNode.next.prev = front;
         size--;
         return firstNode.value;
-        // TODO: Replace with your code
     }
 
     @Override
@@ -66,6 +66,7 @@ public class LinkedDeque<E> implements Deque<E> {
         if (size == 0) {
             return null;
         }
+        // add code to implement removing the last element
         Node<E> lastNode = back.prev;
         back.prev = lastNode.prev;
         lastNode.prev.next = back;
