@@ -321,7 +321,7 @@ public abstract class DequeTests {
          * The output is comma-separated with columns for deque size and add time (nanoseconds).
          */
         @Test
-        void add() {
+        void removeFirst() { //Modified method name
             for (int size = STEP; size <= MAX_SIZE; size += STEP) {
                 System.out.print(size);
                 System.out.print(',');
@@ -333,21 +333,22 @@ public abstract class DequeTests {
                 }
 
                 // Record the total runtimes accumulated across all trials
-                long totalAddTime = 0;
+                // Modified variable name
+                long totalRemoveTime = 0;
 
                 for (int i = 0; i < NUM_TRIALS; i += 1) {
-                    // Measure the time to add one more integer
-                    long addStart = System.nanoTime();
-                    deque.addLast(size);
-                    long addTime = System.nanoTime() - addStart;
+                    // Modified variable name to measure the time to remove the first integer
+                    long removeStart = System.nanoTime();
+                    deque.removeFirst(); //Modified method name
+                    long removeTime = System.nanoTime() - removeStart; //Modified method name
                     // Add to total time
-                    totalAddTime += addTime;
+                    totalRemoveTime += removeTime; //Modified variable name
                     // Remove the just-added integer
-                    deque.removeLast();
+                    deque.addFirst(size); //Modified method name
                 }
 
                 // Output the averages to 10 decimal places.
-                System.out.print(totalAddTime / (double) NUM_TRIALS);
+                System.out.print(totalRemoveTime / (double) NUM_TRIALS); //Modified variable name
                 System.out.println();
             }
         }
