@@ -11,6 +11,7 @@ import java.util.List;
  * @see BinarySearchAutocomplete
  * @see TernarySearchTreeAutocomplete
  */
+
 public interface Autocomplete {
     /**
      * Adds the given collection of autocompletion terms.

@@ -25,13 +25,32 @@ public class BinarySearchAutocomplete implements Autocomplete {
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        // Add all terms to the elements list
+        elements.addAll(terms);
+        // Sort the elements list
+        Collections.sort(elements, CharSequence::compare);
     }
 
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        // Find the insertion point using binary search
+        int start = Collections.binarySearch(elements, prefix, CharSequence::compare);
+        if (start < 0) {
+            start = -(start + 1);
+        }
+
+        List<CharSequence> matches = new ArrayList<>();
+
+        // Collect all matching terms
+        for (int i = start; i < elements.size(); i++) {
+            if (Autocomplete.isPrefixOf(prefix, elements.get(i))) {
+                matches.add(elements.get(i));
+            } else {
+                break;
+            }
+        }
+
+        return matches;
     }
+
 }

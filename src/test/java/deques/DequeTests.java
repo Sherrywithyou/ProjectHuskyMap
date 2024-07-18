@@ -199,7 +199,8 @@ public abstract class DequeTests {
         deque.addLast(4);
 
         // Test that removing and adding back is okay
-        assertEquals(-1, deque.removeFirst());
+        Integer removeFirst = deque.removeFirst();
+        assertEquals(-1, removeFirst);
         deque.addFirst(-1);
         assertEquals(-1, deque.get(0));
 
@@ -208,7 +209,8 @@ public abstract class DequeTests {
         deque.addFirst(-3);
 
         // Test a tricky sequence of removes
-        assertEquals(-3, deque.removeFirst());
+        Integer remove_First = deque.removeFirst();
+        assertEquals(-3, remove_First);
         assertEquals(5, deque.removeLast());
         assertEquals(4, deque.removeLast());
         assertEquals(3, deque.removeLast());
@@ -343,7 +345,7 @@ public abstract class DequeTests {
                     long removeTime = System.nanoTime() - removeStart; //Modified method name
                     // Add to total time
                     totalRemoveTime += removeTime; //Modified variable name
-                    // Remove the just-added integer
+                    // Add the just-removed integer
                     deque.addFirst(size); //Modified method name
                 }
 

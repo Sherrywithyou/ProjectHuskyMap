@@ -24,15 +24,70 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        for (CharSequence term : terms) {
+            overallRoot = add(overallRoot, term, 0);
+        }
     }
 
+    private Node add(Node x, CharSequence term, int d) {
+        char c = term.charAt(d);
+        if (x == null) {
+            x = new Node(c);
+        }
+        if (c < x.data) {
+            x.left = add(x.left, term, d);
+        } else if (c > x.data) {
+            x.right = add(x.right, term, d);
+        } else if (d < term.length() - 1) {
+            x.mid = add(x.mid, term, d + 1);
+        } else {
+            x.isTerm = true;
+        }
+        return x;
+    }
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        List<CharSequence> matches = new ArrayList<>();
+        Node x = get(overallRoot, prefix, 0);
+        if (x == null) {
+            return matches;
+        }
+        if (x.isTerm) {
+            matches.add(prefix);
+        }
+        collect(x.mid, new StringBuilder(prefix), matches);
+        return matches;
     }
+
+    private Node get(Node x, CharSequence prefix, int d) {
+        if (x == null) {
+            return null;
+        }
+        char c = prefix.charAt(d);
+        if (c < x.data) {
+            return get(x.left, prefix, d);
+        } else if (c > x.data) {
+            return get(x.right, prefix, d);
+        } else if (d < prefix.length() - 1) {
+            return get(x.mid, prefix, d + 1);
+        } else {
+            return x;
+        }
+    }
+
+    private void collect(Node x, StringBuilder prefix, List<CharSequence> matches) {
+        if (x == null) {
+            return;
+        }
+        collect(x.left, prefix, matches);
+        if (x.isTerm) {
+            matches.add(prefix.toString() + x.data);
+        }
+        collect(x.mid, prefix.append(x.data), matches);
+        prefix.deleteCharAt(prefix.length() - 1);
+        collect(x.right, prefix, matches);
+    }
+
 
     /**
      * A search tree node representing a single character in an autocompletion term.
@@ -53,3 +108,4 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         }
     }
 }
+
