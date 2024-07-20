@@ -90,6 +90,22 @@ public abstract class AutocompleteTests {
         assertTrue(expected.containsAll(actual));
         assertTrue(actual.containsAll(expected));
     }
+    @Test
+    void compareSimple() {
+        List<CharSequence> terms = List.of(
+                "alpha", "delta", "do", "cats", "dodgy", "pilot", "dog"
+        );
+        CharSequence prefix = "do";
+        List<CharSequence> expected = List.of("do", "dodgy", "dog");
+
+        Autocomplete testing = createAutocomplete();
+        testing.addAll(terms);
+        List<CharSequence> actual = testing.allMatches(prefix);
+        assertEquals(expected.size(), actual.size());
+        assertTrue(expected.containsAll(actual));
+        assertTrue(actual.containsAll(expected));
+    }
+
 
     @Nested
     @Disabled

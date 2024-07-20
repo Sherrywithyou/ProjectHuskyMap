@@ -28,7 +28,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
             overallRoot = add(overallRoot, term, 0);
         }
     }
-
+// Referenced from line 146 to line 157 (put method) from TST.java
     private Node add(Node x, CharSequence term, int d) {
         char c = term.charAt(d);
         if (x == null) {
@@ -45,6 +45,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         }
         return x;
     }
+    // Referenced from line 207 to line 217 (keysWithPrefix method) from TST.JAVA
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
         List<CharSequence> matches = new ArrayList<>();
@@ -59,6 +60,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         return matches;
     }
 
+    // Referenced from line 119 to line 127 (get method) from TST.JAVA
     private Node get(Node x, CharSequence prefix, int d) {
         if (x == null) {
             return null;
@@ -75,6 +77,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         }
     }
 
+    // Referenced from line 220 to line 227 (collect method) from TST.JAVA
     private void collect(Node x, StringBuilder prefix, List<CharSequence> matches) {
         if (x == null) {
             return;
