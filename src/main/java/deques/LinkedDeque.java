@@ -72,7 +72,6 @@ public class LinkedDeque<E> implements Deque<E> {
         lastNode.prev.next = back;
         size--;
         return lastNode.value;
-        // TODO: Replace with your code
 
     }
 

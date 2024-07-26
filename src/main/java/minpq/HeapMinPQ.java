@@ -41,14 +41,17 @@ public class HeapMinPQ<E> implements MinPQ<E> {
         if (contains(element)) {
             throw new IllegalArgumentException("Already contains " + element);
         }
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        pq.add(new PriorityNode<>(element, priority));
     }
 
     @Override
     public boolean contains(E element) {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        for (PriorityNode<E> node : pq) {
+            if (node.getElement().equals(element)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -56,8 +59,7 @@ public class HeapMinPQ<E> implements MinPQ<E> {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        return pq.peek().getElement();
     }
 
     @Override
@@ -65,8 +67,7 @@ public class HeapMinPQ<E> implements MinPQ<E> {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        return pq.poll().getElement();
     }
 
     @Override
@@ -74,13 +75,22 @@ public class HeapMinPQ<E> implements MinPQ<E> {
         if (!contains(element)) {
             throw new NoSuchElementException("PQ does not contain " + element);
         }
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        PriorityNode<E> targetNode = null;
+        for (PriorityNode<E> node : pq) {
+            if (node.getElement().equals(element)) {
+                targetNode = node;
+                break;
+            }
+        }
+        if (targetNode != null) {
+            pq.remove(targetNode);
+            targetNode.setPriority(priority);
+            pq.add(targetNode);
+        }
     }
 
     @Override
     public int size() {
-        // TODO: Replace with your code 
-        throw new UnsupportedOperationException("Not implemented yet");
+        return pq.size();
     }
 }
