@@ -1,9 +1,9 @@
 import graphs.shortestpaths.DijkstraSolver;
-import seamfinding.energy.DualGradientEnergyFunction;
-import seamfinding.energy.EnergyFunction;
 import seamfinding.AdjacencyListSeamFinder;
 import seamfinding.Picture;
 import seamfinding.SeamFinder;
+import seamfinding.energy.DualGradientEnergyFunction;
+import seamfinding.energy.EnergyFunction;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,11 +22,11 @@ public class SeamCarver {
     /**
      * Path to the input image.
      */
-    private static final String INPUT_PATH = "data/seamcarving/HJoceanSmall.png";
+    private static final String INPUT_PATH = "data/seamcarving/TestSeamless.png";
     /**
      * Path to the output image.
      */
-    private static final String OUTPUT_PATH = "data/seamcarving/result.png";
+    private static final String OUTPUT_PATH = "data/seamcarving/resultSeamLess.png";
     /**
      * The {@link EnergyFunction} for determining the minimum-cost seam.
      */

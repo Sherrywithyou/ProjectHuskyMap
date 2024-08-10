@@ -33,6 +33,9 @@ public class GenerativeSeamFinder implements SeamFinder {
     }
 
     @Override
+    // Borrowed from AdjacencyListSeamFinder
+    // Reason: The logic for creating the graph, running the shortest path solver,
+    // and extracting the seam is universal and applicable to both implementations.
     public List<Integer> findHorizontal(Picture picture, EnergyFunction f) {
         PixelGraph graph = new PixelGraph(picture, f);
         List<Node> seam = sps.run(graph, graph.source).solution(graph.sink);
@@ -54,6 +57,9 @@ public class GenerativeSeamFinder implements SeamFinder {
      * @see Pixel
      * @see EnergyFunction
      */
+    // Borrowed the overall structure of PixelGraph, including the use of Picture, EnergyFunction, source, and sink nodes
+    // The basic graph representation, with a source and sink node, remains the same in both implementations.
+    // This structure is fundamental to the seam-finding process and is necessary for both classes.
     private static class PixelGraph implements Graph<Node> {
         /**
          * The {@link Picture} for {@link #neighbors(Node)}.
@@ -66,11 +72,18 @@ public class GenerativeSeamFinder implements SeamFinder {
         /**
          * Source {@link Node} for the adjacency list graph.
          */
+        // Borrowed from AdjacencyListSeamFinder
+        // Both classes define source and sink nodes that represent the start and end points of the graph traversal.
+        // The source node connects to the first column of pixels, and the sink node connects to the last column.
         private final Node source = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code 
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> result = new ArrayList<>(picture.height());
+                for (int j = 0; j < picture.height(); j++) {
+                    Pixel to = new Pixel(0, j);
+                    result.add(new Edge<>(this, to, f.apply(picture, 0, j)));
+                }
+                return result;
             }
         };
         /**
@@ -79,8 +92,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node sink = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code 
-                throw new UnsupportedOperationException("Not implemented yet");
+                return List.of(); // Sink has no neighbors
             }
         };
 
@@ -91,9 +103,13 @@ public class GenerativeSeamFinder implements SeamFinder {
          * @param picture the input picture.
          * @param f       the input energy function.
          */
+        // Different from AdjacencyListSeamFinder
+        // In GenerativeSeamFinder, neighbors are not precomputed and stored.
+        // The graph is generated on-demand when the neighbors() method is called.
         private PixelGraph(Picture picture, EnergyFunction f) {
             this.picture = picture;
             this.f = f;
+            // Neighbors are not stored
         }
 
         @Override
@@ -125,12 +141,28 @@ public class GenerativeSeamFinder implements SeamFinder {
             }
 
             @Override
+            // Different from AdjacencyListSeamFinder
+            // Reason: In GenerativeSeamFinder, neighbors are dynamically generated
+            // each time the method is called, instead of being precomputed.
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code 
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> result = new ArrayList<>();
+                if (x < picture.width() - 1) {
+                    for (int z = y - 1; z <= y + 1; z++) {
+                        if (0 <= z && z < picture.height()) {
+                            Pixel to = new Pixel(x + 1, z);
+                            result.add(new Edge<>(this, to, f.apply(picture, x + 1, z)));
+                        }
+                    }
+                } else {
+                    result.add(new Edge<>(this, sink, 0));
+                }
+                return result;
             }
 
             @Override
+            // Identical to AdjacencyListSeamFinder
+            // Reason: these methods are to define how objects of the Pixel class should behave when they are compared,
+            // printed, or used in hash-based collections
             public String toString() {
                 return "(" + x + ", " + y + ")";
             }

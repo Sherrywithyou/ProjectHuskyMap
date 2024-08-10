@@ -83,6 +83,8 @@ public class AdjacencyListSeamFinder implements SeamFinder {
          */
         private final Node sink = new Node() {
             @Override
+            // Return precomputed neighbors list
+
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
                 return List.of(); // Sink has no neighbors
             }
@@ -96,12 +98,15 @@ public class AdjacencyListSeamFinder implements SeamFinder {
          */
         private PixelGraph(Picture picture, EnergyFunction f) {
             this.pixels = new Pixel[picture.width()][picture.height()];
+            // pre-computed the whole picture
+            // Generate the rightmost column of pixels and their edges to the sink
             // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
             for (int y = 0; y < picture.height(); y += 1) {
                 Pixel from = new Pixel(picture.width() - 1, y);
                 pixels[picture.width() - 1][y] = from;
                 from.neighbors.add(new Edge<>(from, sink, 0));
             }
+            // Generate remaining pixels and their neighbors from right to left
             // Starting from the next-rightmost column...
             for (int x = picture.width() - 2; x >= 0; x -= 1) {
                 // Consider each pixel in the column...
@@ -149,6 +154,7 @@ public class AdjacencyListSeamFinder implements SeamFinder {
             public Pixel(int x, int y) {
                 this.x = x;
                 this.y = y;
+                // Each pixel stores a list of neighbors
                 this.neighbors = new ArrayList<>(3);
             }
 
